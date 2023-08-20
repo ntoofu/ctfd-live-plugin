@@ -39,8 +39,7 @@ eventSource.addEventListener("live",
                                         user_animation(ev.user_id, "failed");
                                         break;
                                     case "challenge_solved":
-                                        user_animation(ev.user_id, "solved");
-                                        update();
+                                        update().then(() => {user_animation(ev.user_id, "solved")})
                                         break;
                                 }
                              },
@@ -175,8 +174,9 @@ function user_animation(user_id, state) {
     setTimeout(() => {div_user.removeAttribute("data-attempt");}, user_animation_duration_ms);
 }
 
-function update() {
-    fetch_data().then(([c, t]) => {challenge_list = c; team_data = t; update_dom()});
+async function update() {
+    [challenge_list, team_data] = await fetch_data();
+    update_dom();
 }
 
 update();
