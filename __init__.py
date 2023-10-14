@@ -9,7 +9,7 @@ from CTFd.api import CTFd_API_v1
 from CTFd.models import Users, db
 from CTFd.plugins import override_template, register_plugin_asset
 from CTFd.utils.decorators import admins_only, during_ctf_time_only
-from CTFd.utils.user import get_current_user
+from CTFd.utils.user import authed, get_current_user
 
 
 class ChallengeViews(db.Model):
@@ -87,6 +87,8 @@ def load(app):
 
     def challenge_func(*args, **kwargs):
         result = challenge_func_orig(*args, **kwargs)
+        if not authed():
+            return result
         if json.loads(result.get_data()).get("success"):
             if len(args) > 0:
                 challenge_id = args[0]
@@ -101,6 +103,8 @@ def load(app):
 
     def attempt_func(*args, **kwargs):
         result = attempt_func_orig(*args, **kwargs)
+        if not authed():
+            return result
         resp_data = json.loads(result.get_data())
         if request.content_type != "application/json":
             request_data = request.form
