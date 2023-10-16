@@ -9,9 +9,7 @@
 div#ctfd-live-plugin-container {
     display: flex;
     flex-direction: column;
-    height: 90vh;
     margin: 1rem 3rem;
-    overflow: hidden;
     perspective: 5rem;
 }
 
@@ -62,9 +60,10 @@ div.ctfd-live-plugin-team[data-order="10"] { --order: 10; }
 div.ctfd-live-plugin-teamname {
     font-size: 150%;
     padding: 1rem;
-    width: 10rem;
+    width: 15rem;
     overflow: hidden;
     text-align: left;
+    height: inherit;
 }
 
 div.ctfd-live-plugin-teamscore {
