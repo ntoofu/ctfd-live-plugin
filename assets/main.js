@@ -54,7 +54,7 @@ async function fetch_data() {
                               .then(response => response.json());
 
     challenge_list = challenges.data.sort((a, b) => a.value - b.value).sort((a, b) => a.category.localeCompare(b.category));
-    var ranks = Object.keys(scores.data).sort();
+    var ranks = Object.keys(scores.data).sort((a, b) => a - b);
     return [challenge_list, ranks.map(rank => {
                      score = scores.data[rank];
                      team_challenges = challenge_list.map(c => ({...c, "solved": score.solves.map(s => s.challenge_id).includes(c.id)}));
